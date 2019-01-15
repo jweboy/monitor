@@ -12,6 +12,6 @@ const childProcess = spawn('node', ['server.js']);
 io.on('connection', (socket) => {
   childProcess.stdout.on('data', (buffer) => {
     socket.emit('logger', buffer.toString());
-    // console.log('buffer =>', buffer);
+    console.log('buffer =>', buffer.toString());
   });
 });

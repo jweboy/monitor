@@ -10,6 +10,12 @@ class Socket {
   logger(callback = () => {}) {
     this.socket.on('logger', (data) => callback(data));
   }
+  emitDir(data) {
+    this.socket.emit('emitDir', data);
+  }
+  onDir(callback = () => {}) {
+    this.socket.on('onDir', (data) => callback(data));
+  }
 }
 
 export default Socket;

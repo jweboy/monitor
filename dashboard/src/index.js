@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import App from './routes';
+import App from './App';
 // import App from './App';
 
 // 获取装载组件的根节点

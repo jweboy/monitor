@@ -1,29 +1,28 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
-import { Button } from 'antd';
-// import nodejs from './assets/nodejs.png'
-import nodejs from './assets/nodejs.png';
-// import jsLogo from './assets/js-logo.svg';
-import jsGif from './assets/js.gif';
-import nodejsDay from './assets/nodejsDay.jpg';
-import { Test, TestDir, TestLess } from './components';
+import { AppContext, initialState } from './store';
+import Router from './components/Router';
 import './App.less';
 
 /* eslint-disable */
 class App extends Component {
+  constructor() {
+    super();
+
+    this.state = initialState;
+  }
 	displayName = App
 	UNSAFE_componentWillMount() {
 		console.warn('will mount!!~~');
 	}
-	componentDidMount() {
-		console.log('ok', API_URL);
-	}
 	render() {
-		console.log('render！~~');
+		console.log('render！~~', this.state);
 		return (
-			<div className="app">
-
-			</div>
+      <AppContext.Provider value={this.state}>
+        <div className="app">
+          <Router />
+        </div>
+      </AppContext.Provider>
 		);
 	}
 }

@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Terminal } from 'xterm';
 import * as fit from 'xterm/lib/addons/fit/fit';
 import Socket from '../../util/socket';
-import { AppContext } from '../../store';
 
 export class Termianal extends Component {
   constructor() {
@@ -16,7 +15,7 @@ export class Termianal extends Component {
       terminal: new Terminal({
         rows: 30,
       }),
-    }
+    };
   }
   componentDidMount() {
     const { socket, terminal } = this.state;
@@ -26,13 +25,11 @@ export class Termianal extends Component {
 
     socket.logger((data) => {
       terminal.write(data);
-    })
-  };
+    });;
+  }
 
   render() {
-    return (
-        <div id="terminal" />
-    );
+    return <div id="terminal" />;
   }
 }
 

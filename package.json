@@ -18,7 +18,7 @@
     "xterm": "^3.10.1"
   },
   "scripts": {
-    "dev": "node app.js",
+    "dev": "node ./server/app.js",
     "next:dev": "next",
     "next:build": "next build",
     "start": "node server.js",

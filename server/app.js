@@ -10,6 +10,11 @@ app.listen(8889, () => {
 const childProcess = spawn('node', ['server.js']);
 
 io.on('connection', (socket) => {
+  // socket
+  socket.on('emitDir', (name) => {
+    console.log(name);
+  });
+
   // Catch buffer
   childProcess.stdout.on('data', (buffer) => {
     socket.emit('logger', buffer.toString());
@@ -34,5 +39,4 @@ io.on('connection', (socket) => {
   childProcess.stdout.on('exit', (code, signal) => {
     console.log('Exit: code is %s, signal is %s.', code, signal);
   });
-
 });

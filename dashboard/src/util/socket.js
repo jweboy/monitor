@@ -4,6 +4,9 @@ const URL = 'http://localhost:8889';
 
 class Socket {
   constructor() {
+    if (this.socket != null) {
+      this.socket.disconnect();
+    }
     this.socket = io.connect(URL);
   }
 

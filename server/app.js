@@ -3,18 +3,22 @@ const { spawn } = require('child_process');
 const app = require('http').createServer();
 const io = require('socket.io')(app);
 
+const searchDirectory = require('./socket/search-directory');
+
 app.listen(8889, () => {
   console.log('Socket server is running 8889');
 });
 
-const childProcess = spawn('node', ['server.js']);
+const childProcess = spawn('node', ['./server.js']);
 
 io.on('connection', (socket) => {
-  // socket
-  socket.on('emitDir', (name) => {
-    console.log(name);
-  });
+  /* =============================== socket ================================ */
+  /**
+   * 获取指定目录中所有子目录的名称列表
+   */
+  socket.on('emitDir', (options) => searchDirectory(socket, options));
 
+  /* ============================ child_process ============================= */
   // Catch buffer
   childProcess.stdout.on('data', (buffer) => {
     socket.emit('logger', buffer.toString());
@@ -27,7 +31,7 @@ io.on('connection', (socket) => {
   });
 
   childProcess.stderr.on('data', (err) => {
-    console.log('Stderr error: ', err);
+    console.log('Stderr error: ', err.toString());
   });
 
   // Close

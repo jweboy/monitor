@@ -11,7 +11,7 @@ export class Termianal extends Component {
     Terminal.applyAddon(fit);
 
     this.state = {
-      socket: new Socket(),
+      socket: Socket,
       terminal: new Terminal({
         rows: 30,
       }),
@@ -23,9 +23,9 @@ export class Termianal extends Component {
     terminal.open(termContainer);
     terminal.fit();
 
-    socket.logger((data) => {
-      terminal.write(data);
-    });;
+    // socket.logger((data) => {
+    //   terminal.write(data);
+    // });
   }
 
   render() {

@@ -1,8 +1,9 @@
 import React from 'react';
-import Socket from '../util/socket';
+import socket from '../util/socket';
 
 export const initialState = {
-  socket: new Socket(),
+  socket,
+  scripts: [],
 };
 
 export const AppContext = React.createContext({

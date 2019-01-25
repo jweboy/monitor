@@ -27,11 +27,11 @@ const MenuItem = Menu.Item;
 
 export default class LeftMenu extends PureComponent {
   render() {
-    const { list } = this.props;
+    const { data } = this.props;
     return (
       <Sider>
-        <Menu theme="dark">
-          {list.map((childMenu) => (
+        <Menu theme="dark" mode="inline">
+          {data.map((childMenu) => (
             <SubMenu
               key={childMenu.type}
               title={
@@ -56,20 +56,20 @@ export default class LeftMenu extends PureComponent {
 }
 
 LeftMenu.defaultProps = {
-  list: [
-    {
-      type: 'task',
-      text: '任务',
-      children: [
-        {
-          type: 'dev',
-          text: 'dev',
-        },
-      ],
-    },
+  data: [
+    // {
+    //   type: 'task',
+    //   text: '任务',
+    //   children: [
+    //     {
+    //       type: 'dev',
+    //       text: 'dev',
+    //     },
+    //   ],
+    // },
   ],
 };
 
 LeftMenu.propTypes = {
-  list: PropTypes.arrayOf(PropTypes.object),
+  data: PropTypes.arrayOf(PropTypes.object),
 };

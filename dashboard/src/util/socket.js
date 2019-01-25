@@ -1,24 +1,32 @@
 import io from 'socket.io-client';
 
 const URL = 'http://localhost:8889';
+const socket = io.connect(
+  URL,
+  {
+    transports: ['websocket'],
+  }
+);
 
-class Socket {
-  constructor() {
-    if (this.socket != null) {
-      this.socket.disconnect();
-    }
-    this.socket = io.connect(URL);
-  }
+// class MonitorSocket extends Socket {
+//   constructor() {
+//     super();
+//     //   if (this.socket != null) {
+//     //     this.socket.disconnect();
+//     //   }
+//     //   socket
+//     //   console.log(this.socket.close);
+//   }
 
-  logger(callback = () => {}) {
-    this.socket.on('logger', (data) => callback(data));
-  }
-  emitDir(data) {
-    this.socket.emit('emitDir', data);
-  }
-  onDir(callback = () => {}) {
-    this.socket.on('onDir', (data) => callback(data));
-  }
-}
+//   logger(callback = () => {}) {
+//     this.socket.on('logger', (data) => callback(data));
+//   }
+//   emit(name, data) {
+//     this.socket.emit(name, data);
+//   }
+//   on(name, callback = () => {}) {
+//     this.socket.on(name, callback);
+//   }
+// }
 
-export default Socket;
+export default socket;

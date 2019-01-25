@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import { AppContext, initialState } from './store';
-import Router from './components/Router';
+import Router from './views/Router';
 import './App.less';
 
 /* eslint-disable */
@@ -11,17 +11,21 @@ class App extends Component {
 
     this.state = initialState;
   }
-	displayName = App
-	UNSAFE_componentWillMount() {
-		console.warn('will mount!!~~');
-	}
+	updateContext = (value) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      ...value,
+    }));
+  }
 	render() {
-		console.log('render！~~', this.state);
+    const rootStore = {
+      ...this.state,
+      updateContext: this.updateContext,
+    };
+
 		return (
-      <AppContext.Provider value={this.state}>
-        <div className="app">
-          <Router />
-        </div>
+      <AppContext.Provider value={rootStore}>
+        <Router />
       </AppContext.Provider>
 		);
 	}

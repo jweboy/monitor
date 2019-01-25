@@ -11,6 +11,7 @@ module.exports = {
     rules: {
       'no-console': 1,
       'prettier/prettier': ['error'],
+      'consistent-return': 0,
       /* add react part */
       "react/prefer-stateless-function": [1, {"ignorePureComponents": true}], // class component与 pure function 声明提示
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],

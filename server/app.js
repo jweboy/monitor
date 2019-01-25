@@ -4,6 +4,7 @@ const app = require('http').createServer();
 const io = require('socket.io')(app);
 
 const searchDirectory = require('./socket/search-directory');
+const readPackageJson = require('./socket/read-package');
 
 app.listen(8889, () => {
   console.log('Socket server is running 8889');
@@ -17,6 +18,7 @@ io.on('connection', (socket) => {
    * 获取指定目录中所有子目录的名称列表
    */
   socket.on('emitDir', (options) => searchDirectory(socket, options));
+  socket.on('startProject', (path) => readPackageJson(socket, path));
 
   /* ============================ child_process ============================= */
   // Catch buffer

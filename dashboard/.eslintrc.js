@@ -23,7 +23,8 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "jsx-a11y"
     ],
     "rules": {
         // "indent": [
@@ -97,5 +98,7 @@ module.exports = {
         "react/prefer-es6-class": 1,
         "react/prop-types": 1,
         "react/react-in-jsx-scope": 1,
+        "jsx-a11y/click-events-have-key-events": 0,
+        "jsx-a11y/no-noninteractive-element-interactions": 0,
     }
 }

@@ -1,5 +1,5 @@
-const checkIsDir = require('../utils/isDir');
-const { readdir } = require('../utils/fs');
+const checkIsDir = require('./isDir');
+const { readdir } = require('./fs');
 
 /**
  * 获取当前目录中所有的子目录名称，不包含隐藏目录
@@ -45,8 +45,8 @@ module.exports = {
   onlyDirectories,
 };
 
-// 跟踪捕获全局的 Promise 错误
-process.on('unhandledRejection', (err) => {
-  // TODO:  EPERM: operation not permitted
-  console.log('UnhandledRejection error', err);
-});
+// // 跟踪捕获全局的 Promise 错误
+// process.on('unhandledRejection', (err) => {
+//   // TODO:  EPERM: operation not permitted
+//   console.log('UnhandledRejection error', err);
+// });

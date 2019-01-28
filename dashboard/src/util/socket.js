@@ -1,12 +1,7 @@
 import io from 'socket.io-client';
 
 const URL = 'http://localhost:8889';
-const socket = io.connect(
-  URL,
-  {
-    transports: ['websocket'],
-  }
-);
+const socket = io.connect(URL);
 
 // class MonitorSocket extends Socket {
 //   constructor() {

@@ -1,48 +1,51 @@
-const { spawn } = require('child_process');
+// const { spawn } = require('child_process');
+// const app = require('express')();
+// const cors = require('cors');
+// const http = require('http').Server(app);
+// const io = require('socket.io')(http);
 
-const app = require('http').createServer();
-const io = require('socket.io')(app);
+// const searchDirectory = require('./socket/search-directory');
+// const readPackageJson = require('./socket/read-package');
 
-const searchDirectory = require('./socket/search-directory');
-const readPackageJson = require('./socket/read-package');
+// app.options('*', cors());
+// app.use(cors());
+// app.listen(8889, () => {
+//   console.log('Socket server is running 8889');
+// });
 
-app.listen(8889, () => {
-  console.log('Socket server is running 8889');
-});
+// const childProcess = spawn('node', ['./server.js']);
 
-const childProcess = spawn('node', ['./server.js']);
+// io.on('connection', (socket) => {
+//   /* =============================== socket ================================ */
+//   /**
+//    * 获取指定目录中所有子目录的名称列表
+//    */
+//   socket.on('emitDir', (options) => searchDirectory(socket, options));
+//   socket.on('startProject', (path) => readPackageJson(socket, path));
 
-io.on('connection', (socket) => {
-  /* =============================== socket ================================ */
-  /**
-   * 获取指定目录中所有子目录的名称列表
-   */
-  socket.on('emitDir', (options) => searchDirectory(socket, options));
-  socket.on('startProject', (path) => readPackageJson(socket, path));
+//   /* ============================ child_process ============================= */
+//   // Catch buffer
+//   childProcess.stdout.on('data', (buffer) => {
+//     socket.emit('logger', buffer.toString());
+//     console.log('Stdout buffer: ', buffer.toString());
+//   });
 
-  /* ============================ child_process ============================= */
-  // Catch buffer
-  childProcess.stdout.on('data', (buffer) => {
-    socket.emit('logger', buffer.toString());
-    console.log('Stdout buffer: ', buffer.toString());
-  });
+//   // Catch error
+//   childProcess.stdout.on('error', (err) => {
+//     console.log('Stdout error: ', err);
+//   });
 
-  // Catch error
-  childProcess.stdout.on('error', (err) => {
-    console.log('Stdout error: ', err);
-  });
+//   childProcess.stderr.on('data', (err) => {
+//     console.log('Stderr error: ', err.toString());
+//   });
 
-  childProcess.stderr.on('data', (err) => {
-    console.log('Stderr error: ', err.toString());
-  });
+//   // Close
+//   childProcess.stdout.on('close', (code, signal) => {
+//     console.log('Close: code is %s, signal is %s.', code, signal);
+//   });
 
-  // Close
-  childProcess.stdout.on('close', (code, signal) => {
-    console.log('Close: code is %s, signal is %s.', code, signal);
-  });
-
-  // Exit
-  childProcess.stdout.on('exit', (code, signal) => {
-    console.log('Exit: code is %s, signal is %s.', code, signal);
-  });
-});
+//   // Exit
+//   childProcess.stdout.on('exit', (code, signal) => {
+//     console.log('Exit: code is %s, signal is %s.', code, signal);
+//   });
+// });

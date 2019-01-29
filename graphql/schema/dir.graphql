@@ -1,0 +1,4 @@
+type Dir {
+  id: Int
+  name: String
+}

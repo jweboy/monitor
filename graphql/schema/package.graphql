@@ -1,0 +1,5 @@
+type Script {
+  name: String
+  value: String
+  id: ID!
+}

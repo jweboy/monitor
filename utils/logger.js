@@ -1,6 +1,6 @@
 const path = require('path');
 const dayjs = require('dayjs');
-const fs = require('../utils/fs');
+const fs = require('./fs');
 const errorCode = require('../contants/error-code');
 const contantsPath = require('../contants/path');
 const flag = require('../contants/flag');

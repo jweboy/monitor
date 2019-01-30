@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 import { Terminal } from 'xterm';
 import * as fit from 'xterm/lib/addons/fit/fit';
-import Socket from '../../util/socket';
+// import Socket from '../../util/socket';
 
 export class Termianal extends Component {
   constructor() {
@@ -11,14 +11,14 @@ export class Termianal extends Component {
     Terminal.applyAddon(fit);
 
     this.state = {
-      socket: Socket,
+      // socket: Socket,
       terminal: new Terminal({
         rows: 30,
       }),
     };
   }
   componentDidMount() {
-    const { socket, terminal } = this.state;
+    // const { socket, terminal } = this.state;
     const termContainer = document.getElementById('terminal');
     terminal.open(termContainer);
     terminal.fit();

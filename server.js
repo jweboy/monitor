@@ -1,6 +1,7 @@
 const express = require('express');
 const graphHTTP = require('express-graphql');
 const { makeExecutableSchema } = require('graphql-tools');
+const cors = require('cors');
 const logger = require('./utils/logger');
 const readGraphqlSchemaFiles = require('./module/read-graphql');
 const resolvers = require('./graphql/resolvers');
@@ -10,7 +11,7 @@ const app = express();
 async function start() {
   const typeDefs = await readGraphqlSchemaFiles();
 
-  app.use(
+  app.use(cors()).use(
     '/graphql',
     graphHTTP({
       schema: makeExecutableSchema({ typeDefs, resolvers }),

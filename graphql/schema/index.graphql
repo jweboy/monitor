@@ -3,5 +3,9 @@
 
 type Query {
   scripts(path: String): [Script]
-  dirs(type: String, path: String): [Dir]
+  dirs: [Dir]
 }
+
+# type Mutation {
+#   currentDirs(type: String, path: String): [Dir]
+# }

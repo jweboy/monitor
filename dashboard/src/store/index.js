@@ -1,8 +1,8 @@
 import React from 'react';
-import socket from '../util/socket';
+// import socket from '../util/socket';
 
 export const initialState = {
-  socket,
+  // socket,
   scripts: [],
 };
 

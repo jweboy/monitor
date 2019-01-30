@@ -1,73 +1,78 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Icon, Alert, Button } from 'antd';
 import { navigate } from '@reach/router';
-import Consumer from '../../components/Consumer';
+import { Mutation, Query } from 'react-apollo';
+// import Consumer from '../../components/Consumer';
+import Loading from '../../components/Loading';
+import DirItem from './DirItem';
+import { withQuery, withMutation, DIR_MUTATION, DIR_QUERY } from './query';
 import styles from './index.less';
 
 class ProjectPage extends Component {
+  static defaultProps = {
+    dirs: [],
+  };
+  static propTypes = {
+    dirs: PropTypes.arrayOf(PropTypes.object),
+  };
   constructor(props) {
     super(props);
 
     this.state = {
-      dirs: [],
       currentPath: '',
     };
-
-    this.socket = props.socket;
   }
 
-  componentDidMount() {
-    this.setCurrentDir();
-    this.getCurrentChildDirs();
-  }
+  componentDidMount() {}
 
-  setCurrentDir(path) {
-    this.socket.emit('emitDir', { type: 'forward', name: path });
-  }
+  // setCurrentDir(path) {
+  //   this.socket.emit('emitDir', { type: 'forward', name: path });
+  // }
 
-  getCurrentChildDirs() {
-    this.socket.once('onDir', ({ path, children }) => {
-      this.setState(
-        {
-          dirs: children,
-          currentPath: path,
-        },
-        () => {
-          const { currentPath } = this.state;
-          const { updateContext } = this.props;
+  // getCurrentChildDirs() {
+  //   this.socket.once('onDir', ({ path, children }) => {
+  //     this.setState(
+  //       {
+  //         dirs: children,
+  //         currentPath: path,
+  //       },
+  //       () => {
+  //         const { currentPath } = this.state;
+  //         const { updateContext } = this.props;
 
-          this.socket.emit('startProject', currentPath);
-          this.socket.on('startProject', (data) => {
-            const keys = Object.keys(data);
-            updateContext({ scripts: keys });
-          });
-        }
-      );
-    });
-  }
-
+  //         this.socket.emit('startProject', currentPath);
+  //         this.socket.on('startProject', (data) => {
+  //           const keys = Object.keys(data);
+  //           updateContext({ scripts: keys });
+  //         });
+  //       }
+  //     );
+  //   });
+  // }
   handleClick = (item) => () => {
     const { currentPath } = this.state;
     this.setCurrentDir(`${currentPath}\\${item}`);
   };
-
   handleBackDir = () => {
     const { currentPath } = this.state;
     this.socket.emit('emitDir', { type: 'back', name: currentPath });
   };
-
-  handleStartProject = () => {
-    navigate('/task');
-  };
+  // handleStartProject = () => {
+  //   navigate('/task');
+  // };
 
   render() {
-    const { dirs, currentPath } = this.state;
+    const { currentPath } = this.state;
+    const { dirs } = this.props;
     const iconStyle = { fontSize: 24 };
+
+    console.log(this.props.dirs);
+
+    // {/* {loading && <Loading />} */}
+
     return (
       <div className="project">
-        {/* <Button type="primary" className={styles.btn} onClick={this.handleStartProject}>
-          启动项目
-        </Button> */}
         <div className={styles.container}>
           <div className={styles.header}>
             <Alert message={currentPath} type="success" />
@@ -82,19 +87,23 @@ class ProjectPage extends Component {
           </div>
           <ul className={styles.list}>
             {dirs.map((dir) => (
-              <li key={dir} className={styles.item} onClick={this.handleClick(dir)}>
-                <Icon type="folder" theme="twoTone" style={iconStyle} />
-                <span className={styles.text}>{dir}</span>
-              </li>
+              <DirItem key={dir.id} style={iconStyle} data={dir} />
             ))}
           </ul>
-          <Button type="primary" className={styles.btn} onClick={this.handleStartProject}>
-            启动项目
-          </Button>
+          {/* <Mutation mutation={DIR_MUTATION}>
+            {(currentDirs, { loading, error }) => {
+              console.log(loading, error);
+              return (
+                <Button type="primary" className={styles.btn} onClick={currentDirs}>
+                  启动项目
+                </Button>
+              );
+            }}
+          </Mutation> */}
         </div>
       </div>
     );
   }
 }
 
-export default Consumer(ProjectPage);
+export default withQuery(ProjectPage);

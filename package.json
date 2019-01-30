@@ -13,6 +13,7 @@
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
     "graphql": "^14.1.1",
+    "graphql-tag": "^2.10.1",
     "graphql-tools": "^4.0.4",
     "next": "^7.0.2",
     "prop-types": "^15.6.2",
@@ -25,7 +26,6 @@
     "xterm": "^3.10.1"
   },
   "scripts": {
-    "dev": "yarn serve & yarn monitor",
     "monitor": "cd dashboard && yarn start",
     "serve": "node -r dotenv/config ./server.js",
     "next:dev": "next",

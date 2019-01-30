@@ -8,7 +8,7 @@ import HomePage from './Home';
 const AppRouter = () => (
   <Router>
     <HomePage path="/" />
-    <ProjectPage path="project" />
+    <ProjectPage path="project" default />
     <TaskPage path="task" />
   </Router>
 );

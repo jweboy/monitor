@@ -38,10 +38,15 @@ module.exports = {
     rules: [
       // es6+语法、react语法解析loader
       {
-        test: [/\.js(x)?$/, /\.mjs$/],
+        test: [/\.js(x)?$/],
         exclude: /node_modules/,
         include: paths.appSrc,
         loader: 'happypack/loader?id=happyBabel',
+      },
+      {
+        type: 'javascript/auto',
+        test: /\.mjs$/,
+        use: [],
       },
       {
         test: /\.ts(x)?$/,

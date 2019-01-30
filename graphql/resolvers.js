@@ -12,4 +12,10 @@ module.exports = {
       return result;
     },
   },
+  // Mutation: {
+  //   currentDirs: async (root, { path, type }) => {
+  //     const result = await searchDirectories(type, path);
+  //     return result;
+  //   },
+  // },
 };

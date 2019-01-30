@@ -1,4 +1,4 @@
 type Dir {
-  id: Int
+  id: ID!
   name: String
 }

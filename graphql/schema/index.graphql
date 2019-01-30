@@ -3,5 +3,5 @@
 
 type Query {
   scripts(path: String): [Script]
-  dirs: [Dir]
+  dirs(type: String, path: String): [Dir]
 }

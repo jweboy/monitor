@@ -1,4 +1,5 @@
 const readPackageJson = require('../module/read-package');
+const searchDirectories = require('../module/search-directory');
 
 module.exports = {
   Query: {
@@ -6,11 +7,9 @@ module.exports = {
       const result = await readPackageJson(path);
       return result;
     },
+    dirs: async (root, { path, type }) => {
+      const result = await searchDirectories(type, path);
+      return result;
+    },
   },
-  //   name: 'jweboy',
-  //   user: {
-  //     id: 1,
-  //     name: 'bingo',
-  //   },
-  //   dir: [{ id: 1, name: 'as' }, { id: 2, name: 'asdadsas' }],
 };

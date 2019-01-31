@@ -1,38 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from 'antd';
-import { Mutation } from 'react-apollo';
-import { withMutation, DIR_QUERY, DIR_MUTATION } from './query';
+import { ApolloConsumer } from 'react-apollo';
+import { DIR_QUERY } from './query';
 import styles from './index.less';
 
 function DirItem(props) {
   const { data, style } = props;
-  console.log(props);
-  const handleClick = () => {
-    props
-      .mutate({
-        refetchQueries: [
-          {
-            query: DIR_QUERY,
-          },
-        ],
-      })
-      .then((res) => {
-        console.warn(res);
-      });
+  // console.warn(data.currentPath);
+  const handleClick = (client) => () => {
+    // client.query({
+    //   query: DIR_QUERY,
+    //   variables: { type: 'forward', path: data.currentPath, fileName: data.name },
+    // });
   };
   return (
-    <Mutation mutation={DIR_MUTATION}>
-      {(currentDirs) => {
+    <ApolloConsumer>
+      {(client) => {
         // currentDirs();
         return (
-          <li key={data.id} className={styles.item} onClick={currentDirs}>
+          <li key={data.id} className={styles.item} onClick={handleClick(client)}>
             <Icon type="folder" theme="twoTone" style={style} />
             <span className={styles.text}>{data.name}</span>
           </li>
         );
       }}
-    </Mutation>
+    </ApolloConsumer>
   );
 }
 
@@ -46,4 +39,4 @@ DirItem.propTypes = {
   style: PropTypes.object,
 };
 
-export default withMutation(DirItem);
+export default DirItem;

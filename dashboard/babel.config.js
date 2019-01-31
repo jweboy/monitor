@@ -12,12 +12,8 @@ module.exports = {
         "style": "css"
       }
     ],
-    [
-      "@babel/plugin-proposal-class-properties",
-      {
-        "loose": true
-      }
-    ],
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", {"loose": true }],
 		require('react-hot-loader/babel'),
 	],
 };

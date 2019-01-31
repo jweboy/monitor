@@ -1,11 +1,7 @@
 # import './package.graphql'
-# import './dir.graphql'
+# import './Directory.graphql'
 
 type Query {
-  scripts(path: String): [Script]
-  dirs: [Dir]
+  scripts(path: String): [Script!]
+  directories(type: String!, path: String, fileName: String): Directory
 }
-
-# type Mutation {
-#   currentDirs(type: String, path: String): [Dir]
-# }

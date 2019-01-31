@@ -5,19 +5,23 @@ const cors = require('cors');
 const logger = require('./utils/logger');
 const readGraphqlSchemaFiles = require('./module/read-graphql');
 const resolvers = require('./graphql/resolvers');
+const setResponseHeader = require('./middleware/response-header');
 
 const app = express();
 
 async function start() {
   const typeDefs = await readGraphqlSchemaFiles();
 
-  app.use(cors()).use(
-    '/graphql',
-    graphHTTP({
-      schema: makeExecutableSchema({ typeDefs, resolvers }),
-      graphiql: true,
-    })
-  );
+  app
+    .use(cors())
+    .use(setResponseHeader)
+    .use(
+      '/graphql',
+      graphHTTP({
+        schema: makeExecutableSchema({ typeDefs, resolvers }),
+        graphiql: true,
+      })
+    );
 
   const server = app.listen(process.env.SERVER_PORT, () => {
     console.log(server.address());
@@ -40,7 +44,7 @@ process.on('unhandledRejection', (err) => {
   console.log('UnhandledRejection err', err);
   logger(err.stack);
 
-  setTimeout(() => {
-    process.exit(1);
-  }, 300);
+  // setTimeout(() => {
+  //   process.exit(1);
+  // }, 300);
 });

@@ -1,42 +1,54 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from 'antd';
-import { ApolloConsumer } from 'react-apollo';
-import { DIR_QUERY } from './query';
+import { pure, compose } from 'recompose';
+import { displayLoadingState } from '../../components/Loading';
+import { withMutation, mutateDirOption } from './query';
 import styles from './index.less';
 
 function DirItem(props) {
-  const { data, style } = props;
-  // console.warn(data.currentPath);
-  const handleClick = (client) => () => {
-    // client.query({
-    //   query: DIR_QUERY,
-    //   variables: { type: 'forward', path: data.currentPath, fileName: data.name },
-    // });
+  const iconStyle = { fontSize: 24 };
+  const { data } = props;
+
+  const handleClick = () => {
+    props.mutate(
+      mutateDirOption({
+        variables: {
+          type: 'forward',
+          path: data.currentPath,
+          fileName: data.name,
+        },
+      })
+    );
   };
+
   return (
-    <ApolloConsumer>
-      {(client) => {
-        // currentDirs();
-        return (
-          <li key={data.id} className={styles.item} onClick={handleClick(client)}>
-            <Icon type="folder" theme="twoTone" style={style} />
-            <span className={styles.text}>{data.name}</span>
-          </li>
-        );
-      }}
-    </ApolloConsumer>
+    <li key={data.id} className={styles.item} onClick={handleClick}>
+      <Icon type="folder" theme="twoTone" style={iconStyle} />
+      <span className={styles.text}>{data.name}</span>
+    </li>
   );
 }
 
 DirItem.defaultProps = {
-  data: {},
-  style: {},
+  data: {
+    name: '',
+    currentPath: '',
+  },
+  mutate: () => {},
 };
 
 DirItem.propTypes = {
-  data: PropTypes.object,
-  style: PropTypes.object,
+  data: PropTypes.shape({
+    name: PropTypes.string,
+    currentPath: PropTypes.string,
+  }),
+  mutate: PropTypes.func,
 };
 
-export default DirItem;
+// export default compose(
+//   withMutation,
+//   displayLoadingState,
+//   pure
+// )(DirItem);
+export default withMutation(DirItem);

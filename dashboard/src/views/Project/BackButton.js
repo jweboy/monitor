@@ -1,31 +1,32 @@
 import React from 'react';
-import { ApolloConsumer } from 'react-apollo';
+import PropTypes from 'prop-types';
 import { Button } from 'antd';
-import { DIR_QUERY } from './query';
+import { withMutation, mutateDirOption } from './query';
 import styles from './index.less';
 
-export default function BackButton(props) {
-  const { currentPath } = props;
-  console.log(currentPath);
-  const handleClick = (client) => () => {
-    client.query({
-      query: DIR_QUERY,
-      variables: { path: currentPath, type: 'back' },
-    });
+function BackButton(props) {
+  const handleClick = () => {
+    props.mutate(
+      mutateDirOption({
+        variables: {
+          type: 'back',
+          path: props.currentPath,
+        },
+      })
+    );
   };
 
-  return (
-    <ApolloConsumer>
-      {(client) => (
-        <Button
-          shape="circle"
-          icon="up"
-          type="primary"
-          onClick={handleClick(client)}
-          size="small"
-          className={styles.btn}
-        />
-      )}
-    </ApolloConsumer>
-  );
+  return <Button shape="circle" icon="up" type="primary" onClick={handleClick} size="small" className={styles.btn} />;
 }
+
+BackButton.defaultProps = {
+  mutate: () => {},
+  currentPath: '',
+};
+
+BackButton.propTypes = {
+  mutate: PropTypes.func,
+  currentPath: PropTypes.string,
+};
+
+export default withMutation(BackButton);

@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Alert, Button } from 'antd';
+import { Alert, Button } from 'antd';
 import { navigate } from '@reach/router';
-import { Query } from 'react-apollo';
-// import Consumer from '../../components/Consumer';
-import Loading from '../../components/Loading';
+import { pure, compose } from 'recompose';
+import { displayLoadingState } from '../../components/Loading';
 import DirItem from './DirItem';
-import { DIR_QUERY, withQuery } from './query';
+import { withQuery } from './query';
 import styles from './index.less';
 import BackButton from './BackButton';
 
-@withQuery
 class ProjectPage extends Component {
   static defaultProps = {
     directories: {
@@ -27,29 +25,35 @@ class ProjectPage extends Component {
 
     this.state = {};
   }
-
+  handleClick() {
+    navigate('/task');
+  }
   render() {
-    const iconStyle = { fontSize: 24 };
     const { directories } = this.props;
+    const currentPath = directories.currentPath;
 
-    console.warn(directories);
-    console.table(directories.childDirs, ['currentPath']);
-    // {/* {loading && <Loading />} */}
-
+    // console.log('Parent: ', directories);
+    // console.table(directories.childDirs, ['currentPath']);
     return (
       <div className="project">
         <div className={styles.container}>
           <div className={styles.header}>
-            {/* <Alert message={currentPath} type="success" /> */}
-            {/* <BackButton currentPath={currentPath} /> */}
+            <Alert message={currentPath} type="success" />
+            <BackButton currentPath={currentPath} />
           </div>
           <ul className={styles.list}>
             {directories.childDirs.map((dir) => (
-              <DirItem key={dir.id} style={iconStyle} data={dir} />
+              <DirItem
+                key={dir.id}
+                data={{
+                  ...dir,
+                  currentPath,
+                }}
+              />
             ))}
           </ul>
         </div>
-        <Button type="primary" className={styles.btn}>
+        <Button type="primary" className={styles.btn} onClick={this.handleClick} style={{ marginRight: 30 }}>
           启动项目
         </Button>
       </div>
@@ -57,4 +61,8 @@ class ProjectPage extends Component {
   }
 }
 
-export default ProjectPage;
+export default compose(
+  withQuery,
+  displayLoadingState,
+  pure
+)(ProjectPage);

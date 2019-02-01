@@ -1,10 +1,9 @@
 type DirInfo {
   id: ID!
   name: String
-  currentPath: String
 }
 
 type Directory {
-  currentPath: String
   childDirs: [DirInfo]
+  currentPath: String
 }

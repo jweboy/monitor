@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Layout } from 'antd';
 import { hot } from 'react-hot-loader';
 // import PropTypes from 'prop-types';
-import { LeftMenu, Terminal } from '../components';
-import Consumer from '../components/Consumer';
+import { LeftMenu, Terminal } from '../../components';
+import Consumer from '../../components/Consumer';
 
 class TaskPage extends Component {
   static defaultProps = {
@@ -32,7 +32,7 @@ class TaskPage extends Component {
     return (
       <Layout style={{ height: '100%' }}>
         <LeftMenu data={menu} />
-        <Terminal />
+        {/* <Terminal /> */}
       </Layout>
     );
   }

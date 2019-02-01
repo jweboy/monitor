@@ -25,7 +25,7 @@ async function start() {
 
   const server = app.listen(process.env.SERVER_PORT, () => {
     console.log(server.address());
-    logger(`Server is run on ${server.address().port}.`);
+    logger(`Graphql server is running on ${server.address().port}.`);
   });
 }
 

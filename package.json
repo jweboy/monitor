@@ -19,6 +19,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "recompose": "^0.30.0",
     "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0",
     "styled-components": "^4.1.3",

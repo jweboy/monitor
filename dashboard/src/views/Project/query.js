@@ -8,17 +8,19 @@ export const DIR_QUERY = gql`
       childDirs {
         name
         id
-        currentPath
       }
     }
   }
 `;
 
 export const DIR_MUTATION = gql`
-  mutation currentDirs($type: String) {
-    currentDirs(type: "forward") {
-      name
-      id
+  mutation Directories($type: String, $path: String, $fileName: String) {
+    directories(type: $type, path: $path, fileName: $fileName) {
+      currentPath
+      childDirs {
+        name
+        id
+      }
     }
   }
 `;
@@ -29,3 +31,16 @@ export const withQuery = graphql(DIR_QUERY, {
 });
 
 export const withMutation = graphql(DIR_MUTATION);
+
+export const mutateDirOption = (option) => {
+  return {
+    ...option,
+    updateQueries: {
+      Directories: (previousData, { mutationResult }) => {
+        const directories = mutationResult.data.directories;
+        previousData.directories = directories;
+        return previousData;
+      },
+    },
+  };
+};

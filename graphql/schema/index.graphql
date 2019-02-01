@@ -5,3 +5,7 @@ type Query {
   scripts(path: String): [Script!]
   directories(type: String!, path: String, fileName: String): Directory
 }
+
+type Mutation {
+  directories(type: String, path: String, fileName: String): Directory
+}

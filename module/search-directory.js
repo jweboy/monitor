@@ -1,9 +1,9 @@
 const { diskDirectories, onlyDirectories } = require('../utils/recursive-directory');
 const { separator, root } = require('../contants/path');
 
-function generateCombinedData(arr = [], currentPath) {
+function generateCombinedData(arr = []) {
   return arr.reduce((_arr, dirName, index) => {
-    _arr.push({ name: dirName, id: index, currentPath });
+    _arr.push({ name: dirName, id: index });
     return _arr;
   }, []);
 }
@@ -18,7 +18,6 @@ module.exports = async function searchDirectories({ type = 'forward', path, file
     } else {
       currentPath = path || root;
     }
-    console.log(currentPath);
   }
 
   // 后退获取目录
@@ -36,7 +35,10 @@ module.exports = async function searchDirectories({ type = 'forward', path, file
       // 指定磁盘对应的目录名称
       const diskChildDirs = await diskDirectories(diskName);
 
-      return diskChildDirs;
+      return {
+        currentPath: diskName,
+        childDirs: generateCombinedData(diskChildDirs),
+      };
     }
 
     // 组合路径名称集
@@ -47,6 +49,6 @@ module.exports = async function searchDirectories({ type = 'forward', path, file
 
   return {
     currentPath,
-    childDirs: generateCombinedData(dirNames, currentPath),
+    childDirs: generateCombinedData(dirNames),
   };
 };

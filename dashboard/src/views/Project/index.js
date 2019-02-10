@@ -52,10 +52,10 @@ class ProjectPage extends Component {
               />
             ))}
           </ul>
+          <Button type="primary" className={styles.btn} onClick={this.handleClick} style={{ marginRight: 30 }}>
+            启动项目
+          </Button>
         </div>
-        <Button type="primary" className={styles.btn} onClick={this.handleClick} style={{ marginRight: 30 }}>
-          启动项目
-        </Button>
       </div>
     );
   }

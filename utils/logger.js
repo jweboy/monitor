@@ -4,23 +4,16 @@ const fs = require('./fs');
 const errorCode = require('../contants/error-code');
 const contantsPath = require('../contants/path');
 const flag = require('../contants/flag');
-
-function mkLogFile(filePath) {
-  return fs.open(filePath, flag.a);
-}
+const { root } = require('../contants/path');
 
 function appendContentToFile(filePath, text) {
   const tpl = `[${dayjs().format('HH:mm:ss')}] ${text}\n`;
   return fs.appendFile(filePath, tpl);
 }
 
-module.exports = function logger(text) {
-  const currentDate = dayjs().format('YYYY-MM-DD');
-  const logPrefix = 'log';
-  const logFile = `${logPrefix}/${currentDate}.txt`;
-  const filePath = path.join(contantsPath.root, logFile);
-
-  fs.stat(filePath)
+function makeLogFile(filePath, text) {
+  return fs
+    .stat(filePath)
     .then(() => {
       if (text != null) {
         appendContentToFile(filePath, text);
@@ -29,9 +22,29 @@ module.exports = function logger(text) {
     .catch((err) => {
       const msg = errorCode[err.code];
       if (msg) {
-        mkLogFile(filePath).then(() => {
+        fs.open(filePath, flag.a).then(() => {
           appendContentToFile(filePath, text);
         });
+      }
+    });
+}
+
+module.exports = function logger(text) {
+  const LOGPRXFIE = 'log';
+  const currentDate = dayjs().format('YYYY-MM-DD');
+  const logFile = `${LOGPRXFIE}/${currentDate}.txt`;
+  const filePath = path.join(contantsPath.root, logFile);
+  const logDirPath = path.join(root, LOGPRXFIE);
+
+  fs.stat(logDirPath)
+    .then(() => {
+      makeLogFile(filePath, text);
+    })
+    .catch((err) => {
+      // ENOENT
+      if (errorCode[err.code]) {
+        fs.mkdir(logDirPath);
+        makeLogFile(filePath, text);
       }
     });
 };

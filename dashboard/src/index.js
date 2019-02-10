@@ -22,10 +22,3 @@ const rootRender = (Component) =>
   );
 
 rootRender(App);
-
-// FIXME: react-hot-loader@latest不需要这个判断了
-// if (module.hot) {
-//   module.hot.accept('./routes', () => {
-//     rootRender(App)
-//   })
-// }

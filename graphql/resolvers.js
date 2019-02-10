@@ -3,19 +3,10 @@ const searchDirectories = require('../module/search-directory');
 
 module.exports = {
   Query: {
-    scripts: async (root, { path }) => {
-      const result = await readPackageJson(path);
-      return result;
-    },
-    directories: async (root, option) => {
-      const result = await searchDirectories(option);
-      return result;
-    },
+    scripts: (root, { path }) => readPackageJson(path),
+    directories: (root, option) => searchDirectories(option),
   },
   Mutation: {
-    directories: async (root, option) => {
-      const result = await searchDirectories(option);
-      return result;
-    },
+    directories: (root, option) => searchDirectories(option),
   },
 };

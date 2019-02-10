@@ -1,8 +1,8 @@
 # import './package.graphql'
-# import './Directory.graphql'
+# import './directory.graphql'
 
 type Query {
-  scripts(path: String): [Script!]
+  scripts(path: String): [Script]
   directories(type: String!, path: String, fileName: String): Directory
 }
 

@@ -1,41 +1,54 @@
 import React, { Component } from 'react';
-import { Layout } from 'antd';
-import { hot } from 'react-hot-loader';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { LeftMenu, Terminal } from '../../components';
-import Consumer from '../../components/Consumer';
+import { withQuery } from './query';
 
+@withQuery
 class TaskPage extends Component {
-  static defaultProps = {
-    scripts: [],
-  };
   constructor(props) {
     super(props);
-
-    const scripts = props.scripts.map((item) => {
-      return { type: item, text: item };
-    });
-
     this.state = {
-      menu: [
-        {
-          type: 'task',
-          text: '任务',
-          children: scripts,
-        },
-      ],
+      // menu: [
+      //   {
+      //     type: 'task',
+      //     name: '任务',
+      //     children: props.scripts,
+      //   },
+      // ],
+      scripts: [],
     };
-    this.socket = props.socket;
+  }
+  static getDerivedStateFromProps(props, state) {
+    if (props.scripts !== state.scripts && props.scripts.length > 0) {
+      return {
+        scripts: props.scripts,
+      };
+    }
+    return null;
+  }
+  componentDidMount() {
+    // dispatch menu action
   }
   render() {
-    const { menu } = this.state;
+    const { scripts } = this.state;
+    console.table(scripts);
+    // const { scripts } = this.props;
     return (
-      <Layout style={{ height: '100%' }}>
-        <LeftMenu data={menu} />
+      <div>
+        TaskPage
+        {/* <LeftMenu data={menu} /> */}
         {/* <Terminal /> */}
-      </Layout>
+      </div>
     );
   }
 }
 
-export default hot(module)(Consumer(TaskPage));
+// TaskPage.defaultProps = {
+//   scripts: [],
+// };
+
+// TaskPage.propTypes = {
+//   scripts: PropTypes.array,
+// };
+
+export default TaskPage;

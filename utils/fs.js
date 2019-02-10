@@ -8,5 +8,6 @@ fsPromise.readdir = util.promisify(fs.readdir);
 fsPromise.readFile = util.promisify(fs.readFile);
 fsPromise.open = util.promisify(fs.open);
 fsPromise.appendFile = util.promisify(fs.appendFile);
+fsPromise.mkdir = util.promisify(fs.mkdir);
 
 module.exports = fsPromise;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
-import { AppContext, initialState } from './store';
+import { Provider, initialState } from './store';
 import Router from './views/Router';
 import './App.less';
 
@@ -24,10 +24,10 @@ class App extends Component {
     };
 
 		return (
-      <AppContext.Provider value={rootStore}>
+      <Provider value={rootStore}>
         <Router />
-      </AppContext.Provider>
-		);
+      </Provider>
+    );
 	}
 }
 

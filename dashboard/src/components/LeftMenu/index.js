@@ -28,23 +28,24 @@ const MenuItem = Menu.Item;
 export default class LeftMenu extends PureComponent {
   render() {
     const { data } = this.props;
+    console.warn(data);
     return (
       <Sider>
         <Menu theme="dark" mode="inline">
           {data.map((childMenu) => (
             <SubMenu
-              key={childMenu.type}
+              key={childMenu.id}
               title={
                 <span>
                   {/* for react/jsx-wrap-multilines */}
                   <Icon type="project" />
-                  <span>{childMenu.text}</span>
+                  <span>{childMenu.name}</span>
                 </span>
               }
             >
               {childMenu.children.map((subMenu) => (
-                <MenuItem key={subMenu.type}>
-                  <span>{subMenu.text}</span>
+                <MenuItem key={subMenu.id}>
+                  <span>{subMenu.name}</span>
                 </MenuItem>
               ))}
             </SubMenu>

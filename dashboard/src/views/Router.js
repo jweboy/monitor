@@ -7,9 +7,10 @@ import HomePage from './Home';
 
 const AppRouter = () => (
   <Router>
-    <HomePage path="/" />
-    <ProjectPage path="project" default />
-    <TaskPage path="task" />
+    <HomePage path="/">
+      <TaskPage path="task" />
+      <ProjectPage path="project" default />
+    </HomePage>
   </Router>
 );
 

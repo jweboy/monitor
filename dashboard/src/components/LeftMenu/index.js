@@ -28,7 +28,7 @@ const MenuItem = Menu.Item;
 export default class LeftMenu extends PureComponent {
   render() {
     const { data } = this.props;
-    console.warn(data);
+    // console.warn(data);
     return (
       <Sider>
         <Menu theme="dark" mode="inline">

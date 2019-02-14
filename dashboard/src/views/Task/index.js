@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { LeftMenu, Terminal } from '../../components';
-import { withQuery } from './query';
+import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
+// import { LeftMenu, Terminal } from '../../components';
+import { withQuery, mapDispatchToProps } from './query';
 
+@connect(
+  (state) => state,
+  mapDispatchToProps
+)
 @withQuery
 class TaskPage extends Component {
   constructor(props) {
@@ -18,25 +23,26 @@ class TaskPage extends Component {
       scripts: [],
     };
   }
-  static getDerivedStateFromProps(props, state) {
-    if (props.scripts !== state.scripts && props.scripts.length > 0) {
-      return {
-        scripts: props.scripts,
-      };
-    }
-    return null;
-  }
+  // static getDerivedStateFromProps(props, state) {
+  //   if (props.scripts !== state.scripts && props.scripts.length > 0) {
+  //     return {
+  //       scripts: props.scripts,
+  //     };
+  //   }
+  //   return null;
+  // }
   componentDidMount() {
-    // dispatch menu action
+    console.warn(this.props);
+    const { updateMenuList } = this.props;
+    updateMenuList();
   }
   render() {
     const { scripts } = this.state;
-    console.table(scripts);
+    // console.table(scripts);
     // const { scripts } = this.props;
     return (
       <div>
         TaskPage
-        {/* <LeftMenu data={menu} /> */}
         {/* <Terminal /> */}
       </div>
     );
@@ -50,5 +56,7 @@ class TaskPage extends Component {
 // TaskPage.propTypes = {
 //   scripts: PropTypes.array,
 // };
+const TaskPageWithQuery = withQuery(TaskPage);
 
 export default TaskPage;
+// export default connect()(TaskPageWithQuery);

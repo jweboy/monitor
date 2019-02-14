@@ -1,24 +1,32 @@
 import React from 'react';
-import { render } from 'react-dom';
-import { ApolloProvider } from 'react-apollo';
+import ReactDOM from 'react-dom';
 import ApolloClient from 'apollo-boost';
-import App from './App';
+import { ApolloProvider, compose } from 'react-apollo';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import App from './views/Router';
+import reducers from './reducers';
+
+const REQUEST_URL = 'http://localhost:3000/graphql';
 
 // graphql client
 const client = new ApolloClient({
-  uri: 'http://localhost:3000/graphql',
+  uri: REQUEST_URL,
 });
 
-// 获取装载组件的根节点
-const mountNode = document.getElementById('root');
+const initialState = {};
 
-// 定义根组件渲染的函数
-const rootRender = (Component) =>
-  render(
-    <ApolloProvider client={client}>
-      <Component />
-    </ApolloProvider>,
-    mountNode
-  );
+const store = createStore(
+  reducers,
+  initialState,
+  compose(typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined' ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f)
+);
 
-rootRender(App);
+ReactDOM.render(
+  <ApolloProvider client={client}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </ApolloProvider>,
+  document.getElementById('root')
+);

@@ -15,7 +15,8 @@ class HomePage extends PureComponent {
     return (
       <ErrorBoundary>
         <Layout style={{ height: '100%' }}>
-          {this.checkIsNotRootUri(location) && <Consumer>{({ scripts }) => <LeftMenu data={scripts} />}</Consumer>}
+          {/* {this.checkIsNotRootUri(location) && <Consumer>{({ scripts }) => <LeftMenu data={scripts} />}</Consumer>} */}
+          {this.checkIsNotRootUri(location) && <LeftMenu data={[]} />}
           {/* <Terminal /> */}
           {this.checkIsNotRootUri(location) && <Link to="/">退出</Link>}
           {children}

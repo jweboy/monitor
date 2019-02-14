@@ -23,10 +23,10 @@ class App extends Component {
       updateContext: this.updateContext,
     };
 
+    console.warn(this.props);
+
 		return (
-      <Provider value={rootStore}>
-        <Router />
-      </Provider>
+      <Router />
     );
 	}
 }

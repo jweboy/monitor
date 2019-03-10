@@ -12,15 +12,17 @@ export const SCRIPT_QUERY = gql`
 `;
 
 export const withQuery = graphql(SCRIPT_QUERY, {
-  props: ({ data }) => ({ ...data }),
-  options: { variables: { path: '/home/jweboy/Projects/MyGithubRepos/monitor' } },
+  props: ({ ownProps, data }) => {
+    return {
+      ...data,
+      action: ownProps.getMenuList,
+    };
+  },
+  options: { variables: { path: '/Users/jianglei/GithubProjects/monitor' } },
 });
 
-export const mapDispatchToProps = (dispatch) => {
-  const updateMenuList = (path) => {
-    dispatch(path);
-  };
+export const mapDispatchToProps = ({ task: { getMenuList } }) => {
   return {
-    updateMenuList,
+    getMenuList,
   };
 };

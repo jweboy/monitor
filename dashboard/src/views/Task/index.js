@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
 // import { LeftMenu, Terminal } from '../../components';
+// import { } from 'rematch';
 import { withQuery, mapDispatchToProps } from './query';
 
 @connect(
-  (state) => state,
+  (state) => {
+    console.log(state);
+    return state;
+  },
   mapDispatchToProps
 )
 @withQuery
@@ -33,8 +37,8 @@ class TaskPage extends Component {
   // }
   componentDidMount() {
     console.warn(this.props);
-    const { updateMenuList } = this.props;
-    updateMenuList();
+    // const { updateMenuList } = this.props;
+    // updateMenuList();
   }
   render() {
     const { scripts } = this.state;

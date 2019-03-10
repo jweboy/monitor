@@ -1,6 +1,0 @@
-[Mon Jan 28 2019 15:56:39 GMT+0800 (GMT+08:00)] Server is running.
-[Mon Jan 28 2019 15:56:39 GMT+0800 (GMT+08:00)] Symbol(mysymbol)
-.
-[Mon Jan 28 2019 15:57:03 GMT+0800 (GMT+08:00)] Server is running.
-[Mon Jan 28 2019 15:57:08 GMT+0800 (GMT+08:00)] Server is running.
-[Mon Jan 28 2019 15:57:11 GMT+0800 (GMT+08:00)] Server is running.

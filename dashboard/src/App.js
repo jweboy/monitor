@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
-import { Provider, initialState } from './store';
+// import { Provider, initialState } from './store';
 import Router from './views/Router';
 import './App.less';
 
@@ -9,21 +9,19 @@ class App extends Component {
   constructor() {
     super();
 
-    this.state = initialState;
+    // this.state = initialState;
   }
-	updateContext = (value) => {
-    this.setState((prevState) => ({
-      ...prevState,
-      ...value,
-    }));
-  }
+	// updateContext = (value) => {
+  //   this.setState((prevState) => ({
+  //     ...prevState,
+  //     ...value,
+  //   }));
+  // }
 	render() {
     const rootStore = {
       ...this.state,
-      updateContext: this.updateContext,
+      // updateContext: this.updateContext,
     };
-
-    console.warn(this.props);
 
 		return (
       <Router />

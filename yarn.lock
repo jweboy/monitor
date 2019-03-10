@@ -790,6 +790,13 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
+"@rematch/core@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@rematch/core/-/core-1.1.0.tgz#702aa1d20420cec403d16626cbb7730f9b1a756d"
+  integrity sha512-qqK6oG7peM8wwMzHOEjJUBQUeBSb0i2iwNvRpzj89ebjaqUgvMIWwNWvypk8zleCzkOe1rLRyj+05u5eNBi3lQ==
+  dependencies:
+    redux "^4.0.1"
+
 "@webassemblyjs/ast@1.7.11":
   version "1.7.11"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.7.11.tgz#b988582cafbb2b095e8b556526f30c90d057cace"

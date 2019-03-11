@@ -15,14 +15,16 @@ export const withQuery = graphql(SCRIPT_QUERY, {
   props: ({ ownProps, data }) => {
     return {
       ...data,
-      action: ownProps.getMenuList,
+      dispatchMenuChild: ownProps.scriptList,
+      dispatchMenu: ownProps.leftbar,
     };
   },
   options: { variables: { path: '/Users/jianglei/GithubProjects/monitor' } },
 });
 
-export const mapDispatchToProps = ({ task: { getMenuList } }) => {
+export const mapDispatchToProps = ({ task: { scriptList }, common: { leftbar } }) => {
   return {
-    getMenuList,
+    scriptList,
+    leftbar,
   };
 };

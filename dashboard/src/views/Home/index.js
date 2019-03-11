@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { Layout } from 'antd';
 import { Link } from '@reach/router';
 import ErrorBoundary from '../../components/ErrorBoundary';
-import LeftMenu from '../../components/LeftMenu';
-import { Consumer } from '../../store';
+import LeftBar from '../../stateful-components/LeftBar';
 
 class HomePage extends PureComponent {
   checkIsNotRootUri = (location) => location.pathname !== '/';
@@ -15,10 +14,10 @@ class HomePage extends PureComponent {
     return (
       <ErrorBoundary>
         <Layout style={{ height: '100%' }}>
-          {/* {this.checkIsNotRootUri(location) && <Consumer>{({ scripts }) => <LeftMenu data={scripts} />}</Consumer>} */}
-          {this.checkIsNotRootUri(location) && <LeftMenu data={[]} />}
+          {/* {this.checkIsNotRootUri(location) && <Consumer>{({ scripts }) => <LeftBar data={scripts} />}</Consumer>} */}
+          {this.checkIsNotRootUri(location) && <LeftBar />}
           {/* <Terminal /> */}
-          {this.checkIsNotRootUri(location) && <Link to="/">退出</Link>}
+          {this.checkIsNotRootUri(location) && <Link to="/">退出 </Link>}
           {children}
         </Layout>
       </ErrorBoundary>

@@ -1,6 +1,7 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
@@ -25,19 +26,32 @@ const MenuItem = Menu.Item;
 //   }
 // }
 
-export default class LeftMenu extends PureComponent {
+@connect((state) => ({
+  data: state.common.leftbar,
+}))
+class LeftBar extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+  static getDerivedStateFromProps(props, state) {
+    console.warn(props);
+    return state;
+  }
+  componentDidMount = () => {
+    console.warn(this.props);
+  }
   render() {
     const { data } = this.props;
-    // console.warn(data);
     return (
       <Sider>
         <Menu theme="dark" mode="inline">
           {data.map((childMenu) => (
             <SubMenu
-              key={childMenu.id}
+              key={childMenu.type}
               title={
                 <span>
-                  {/* for react/jsx-wrap-multilines */}
                   <Icon type="project" />
                   <span>{childMenu.name}</span>
                 </span>
@@ -56,21 +70,24 @@ export default class LeftMenu extends PureComponent {
   }
 }
 
-LeftMenu.defaultProps = {
-  data: [
-    // {
-    //   type: 'task',
-    //   text: '任务',
-    //   children: [
-    //     {
-    //       type: 'dev',
-    //       text: 'dev',
-    //     },
-    //   ],
-    // },
-  ],
+LeftBar.defaultProps = {
+  data: [],
 };
 
-LeftMenu.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object),
+LeftBar.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      type: PropTypes.string,
+      children: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string,
+          value: PropTypes.string,
+          id: PropTypes.string,
+        })
+      ),
+    })
+  ),
 };
+
+export default LeftBar;

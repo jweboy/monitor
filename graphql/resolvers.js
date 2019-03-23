@@ -3,10 +3,10 @@ const searchDirectories = require('../module/search-directory');
 
 module.exports = {
   Query: {
-    scripts: (root, { path }) => readPackageJson(path),
-    directories: (root, option) => searchDirectories(option),
+    scripts: async (_, { path }) => readPackageJson(path),
+    directories: (_, option) => searchDirectories(option),
   },
   Mutation: {
-    directories: (root, option) => searchDirectories(option),
+    directories: (_, option) => searchDirectories(option),
   },
 };

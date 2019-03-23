@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Alert, Button } from 'antd';
-import { navigate } from '@reach/router';
+import { Alert } from 'antd';
+// import { navigate } from '@reach/router';
 import { pure, compose } from 'recompose';
+// import { connect } from 'react-redux';
 import { displayLoadingState } from '../../components/Loading';
 import DirItem from './DirItem';
 import { withQuery } from './query';
 import styles from './index.less';
 import BackButton from './BackButton';
+import JumpButton from './JumpButton';
 
 class ProjectPage extends Component {
   static defaultProps = {
@@ -24,9 +26,6 @@ class ProjectPage extends Component {
     super(props);
 
     this.state = {};
-  }
-  handleClick() {
-    navigate('/task');
   }
   render() {
     const { directories } = this.props;
@@ -52,9 +51,7 @@ class ProjectPage extends Component {
               />
             ))}
           </ul>
-          <Button type="primary" className={styles.btn} onClick={this.handleClick} style={{ marginRight: 30 }}>
-            启动项目
-          </Button>
+          <JumpButton currentPath={currentPath} />
         </div>
       </div>
     );

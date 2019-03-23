@@ -1,3 +1,13 @@
+# 开发
+
+## 启动 graphql 服务
+
+> yarn serve
+
+### 启动开发
+
+> yarn monitor
+
 # 参考
 
 - [eslint-plugin-import](https://github.com/benmosher/eslint-plugin-import)

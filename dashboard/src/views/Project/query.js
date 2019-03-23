@@ -26,7 +26,7 @@ export const DIR_MUTATION = gql`
 `;
 
 export const withQuery = graphql(DIR_QUERY, {
-  props: ({ data }) => ({ ...data }),
+  props: ({ data }) => data,
   options: { variables: { type: 'forward' } },
 });
 

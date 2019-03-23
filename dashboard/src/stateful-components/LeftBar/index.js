@@ -30,20 +30,9 @@ const MenuItem = Menu.Item;
   data: state.common.leftbar,
 }))
 class LeftBar extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-  static getDerivedStateFromProps(props, state) {
-    console.warn(props);
-    return state;
-  }
-  componentDidMount = () => {
-    console.warn(this.props);
-  }
   render() {
     const { data } = this.props;
+    // console.warn('render menu', data);
     return (
       <Sider>
         <Menu theme="dark" mode="inline">

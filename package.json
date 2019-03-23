@@ -31,7 +31,7 @@
   },
   "scripts": {
     "monitor": "cd dashboard && yarn start",
-    "serve": "node -r dotenv/config ./server.js",
+    "serve": "nodemon -r dotenv/config ./server.js",
     "next:dev": "next",
     "next:build": "next build",
     "start": "node server.js",

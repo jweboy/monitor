@@ -30,5 +30,6 @@ module.exports = async function readPackageJson(projectPath) {
       if (errorCode[err.code]) {
         logger(err.message);
       }
+      return [];
     });
 };

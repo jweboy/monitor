@@ -1,11 +1,12 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Layout } from 'antd';
 import { Link } from '@reach/router';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import LeftBar from '../../stateful-components/LeftBar';
+import styles from './index.less';
 
-class HomePage extends PureComponent {
+class HomePage extends Component {
   checkIsNotRootUri = (location) => location.pathname !== '/';
 
   render() {
@@ -14,11 +15,11 @@ class HomePage extends PureComponent {
     return (
       <ErrorBoundary>
         <Layout style={{ height: '100%' }}>
-          {/* {this.checkIsNotRootUri(location) && <Consumer>{({ scripts }) => <LeftBar data={scripts} />}</Consumer>} */}
           {this.checkIsNotRootUri(location) && <LeftBar />}
-          {/* <Terminal /> */}
-          {this.checkIsNotRootUri(location) && <Link to="/">退出 </Link>}
-          {children}
+          <Layout className={styles.main}>
+            {this.checkIsNotRootUri(location) && <Link to="/">退出 </Link>}
+            {children}
+          </Layout>
         </Layout>
       </ErrorBoundary>
     );

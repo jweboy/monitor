@@ -4,13 +4,15 @@ export default {
   },
   reducers: {
     leftbar(state, payload) {
-      const currIndex = state.leftbar.findIndex((item) => {
-        return item.type === payload.type;
-      });
-      if (currIndex < 0) {
-        state.leftbar = [...state.leftbar, ...[payload]];
-      }
-      return state;
+      // console.warn(state, payload);
+      // const currIndex = state.leftbar.findIndex((item) => {
+      //   return item.type === payload.type;
+      // });
+      // if (currIndex < 0) {
+      //   const leftbar = [...leftbar, ...[payload]];
+      // }
+      const leftbar = [payload];
+      return Object.assign({}, state, { leftbar });
     },
   },
 };

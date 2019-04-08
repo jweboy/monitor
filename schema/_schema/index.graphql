@@ -10,3 +10,7 @@ type Query {
 type Mutation {
   directories(type: String, path: String, fileName: String): Directory
 }
+
+# type Subscription {
+#   # command(script: String): bufferData
+# }

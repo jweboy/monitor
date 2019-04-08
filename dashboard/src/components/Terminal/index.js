@@ -5,20 +5,31 @@ import { Terminal } from 'xterm';
 import styles from './index.less';
 
 export class Termianal extends Component {
+  static defaultProps = {
+    streamListened: {},
+  }
+  constructor(props) {
+    super(props);
+
+    this.terminal = {};
+  }
   componentDidMount() {
     // Terminal.applyAddon(fit);
     const termContainer = document.getElementById('terminal');
-    const terminal = new Terminal({
+    this.terminal = new Terminal({
       RendererType: 'dom',
       cursorBlink: true,
       scrollBack: 3,
       tabStopWidth: 3,
     });
-    terminal.open(termContainer);
-    // terminal.fit();
-    // socket.logger((data) => {
-    //   terminal.write(data);
-    // });
+    this.terminal.open(termContainer);
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      const { streamListened } = this.props;
+      this.terminal.write(streamListened.data && streamListened.data.trim() + '\n');
+      // TODO: 替换回车为换行符
+    }
   }
 
   render() {

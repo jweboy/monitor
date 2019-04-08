@@ -15,7 +15,7 @@ class HomePage extends Component {
     return (
       <ErrorBoundary>
         <Layout style={{ height: '100%' }}>
-          {this.checkIsNotRootUri(location) && <LeftBar />}
+          {this.checkIsNotRootUri(location) && <LeftBar location={location} />}
           <Layout className={styles.main}>
             {this.checkIsNotRootUri(location) && <Link to="/">退出 </Link>}
             {children}

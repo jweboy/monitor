@@ -4,7 +4,7 @@ const { makeExecutableSchema } = require('graphql-tools');
 const cors = require('cors');
 const logger = require('./utils/logger');
 const readGraphqlSchemaFiles = require('./module/read-graphql');
-const resolvers = require('./graphql/resolvers');
+const resolvers = require('./schema/_resolvers');
 const setResponseHeader = require('./middleware/response-header');
 
 const app = express();

@@ -3,35 +3,30 @@ import { Layout, Menu, Icon } from 'antd';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { wihtMutation } from './graphql';
+
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 const MenuItem = Menu.Item;
 
-// const MySubMenu = ({ children, title, key }) => (
-//   <div>
-//     <SubMenu key={key} title={title}>
-//       {children}
-//     </SubMenu>
-//   </div>
-// );
-
-// class MySubMenu extends PureComponent {
-//   render() {
-//     const { children, title, key } = this.props;
-//     return (
-//       <SubMenu key={key} title={title}>
-//         {children}
-//       </SubMenu>
-//     );
-//   }
-// }
-
+@wihtMutation
 @connect((state) => ({
   data: state.common.leftbar,
 }))
 class LeftBar extends Component {
+  handleClick = (item) => () => {
+    const { mutate, location } = this.props;
+
+    mutate({
+      variables: {
+        path: location.state.currentPath,
+        script: item.value,
+      },
+    });
+  };
   render() {
     const { data } = this.props;
+    console.log(this.props);
     // console.warn('render menu', data);
     return (
       <Sider>
@@ -47,7 +42,7 @@ class LeftBar extends Component {
               }
             >
               {childMenu.children.map((subMenu) => (
-                <MenuItem key={subMenu.id}>
+                <MenuItem key={subMenu.id} onClick={this.handleClick(subMenu)}>
                   <span>{subMenu.name}</span>
                 </MenuItem>
               ))}
@@ -61,6 +56,8 @@ class LeftBar extends Component {
 
 LeftBar.defaultProps = {
   data: [],
+  mutate: () => {},
+  location: {},
 };
 
 LeftBar.propTypes = {
@@ -77,6 +74,10 @@ LeftBar.propTypes = {
       ),
     })
   ),
+  mutate: PropTypes.func,
+  location: PropTypes.shape({
+    state: PropTypes.object,
+  }),
 };
 
 export default LeftBar;

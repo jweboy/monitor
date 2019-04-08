@@ -11,6 +11,14 @@ export const SCRIPT_QUERY = gql`
   }
 `;
 
+export const STREAM_SUBSCRIPTION = gql`
+  subscription streamListened {
+    streamListened {
+      data
+    }
+  }
+`;
+
 export const withQuery = graphql(SCRIPT_QUERY, {
   props: ({ data }) => data,
   options: (props) => {
@@ -20,6 +28,10 @@ export const withQuery = graphql(SCRIPT_QUERY, {
       },
     };
   },
+});
+
+export const withSubscribe = graphql(STREAM_SUBSCRIPTION, {
+  props: ({ data }) => data,
 });
 
 export const mapDispatchToProps = ({ task: { scriptList }, common: { leftbar } }) => {

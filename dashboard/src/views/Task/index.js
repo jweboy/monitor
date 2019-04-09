@@ -1,20 +1,41 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
-import { Button } from 'antd';
-import { Subscription } from 'react-apollo';
+import { Badge } from 'antd';
 import styles from './index.less';
 import { Terminal } from '../../components';
-import { withQuery, mapDispatchToProps, STREAM_SUBSCRIPTION, withSubscribe } from './query';
+import { withQuery, mapDispatchToProps, withSubscribe } from './query';
+import StopButton from './StopButton';
 
-const Termal = withSubscribe(Terminal);
+// const Termal = withSubscribe(Terminal);
 
 @connect(
   () => ({}),
   mapDispatchToProps
 )
 @withQuery
+@withSubscribe
 class TaskPage extends Component {
+  static defaultProps = {
+    streamListened: {
+      killed: true,
+      data: '',
+    },
+  };
+  static getStatus(killed) {
+    if (killed) {
+      return {
+        text: '已停止',
+        color: 'red',
+        status: 'error',
+      };
+    }
+    return {
+      text: '运行中',
+      status: 'success',
+      color: 'green',
+    };
+  }
   constructor(props) {
     super(props);
 
@@ -42,29 +63,17 @@ class TaskPage extends Component {
     // });
   }
 
-  handleClick = () => {
-    console.warn(this.props);
-  };
-
   render() {
     console.warn(this.props);
+    const { streamListened } = this.props;
     return (
       <div>
         <div className={styles.header}>
-          <Button type="danger" onClick={this.handleClick}>
-            停止
-          </Button>
+          {/* subscribeToMore  https://www.apollographql.com/docs/react/advanced/subscriptions */}
+          <StopButton killed={streamListened.killed} />
+          <Badge {...TaskPage.getStatus(streamListened.killed)} />
         </div>
-        {/* <Subscription subscription={STREAM_SUBSCRIPTION} variables={{ path: 'haha' }}>
-          {({ data }) => {
-            const { streamListened } = data;
-            return <div>{streamListened.data}</div>;
-          }}
-        </Subscription> */}
-        {/* <Subscription subscription={STREAM_SUBSCRIPTION}>
-          {({ data }) => <Terminal data={data.streamListened} />}
-        </Subscription> */}
-        <Termal />
+        <Terminal data={streamListened.data} />
       </div>
     );
   }

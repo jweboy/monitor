@@ -6,7 +6,7 @@ const LISTEN_STREAM = 'LISTEN_STREAM';
 
 const streamTypeDefs = `
     type Stream {
-        timestamp: Int
+        killed: Boolean
         data: String
     }
 
@@ -16,6 +16,7 @@ const streamTypeDefs = `
 
     extend type Mutation {
         listenStream(path: String, script: String): Stream
+        killStream: Stream
     }
 `;
 
@@ -26,8 +27,8 @@ const streamResolvers = {
     },
   },
   Mutation: {
-    listenStream: async (_, args) => startProcess('listen', pubsub, args),
-    // killStream: () => startProcess('kill'),
+    listenStream: (_, args) => startProcess('listen', pubsub, args),
+    killStream: () => startProcess('kill', pubsub),
   },
 };
 

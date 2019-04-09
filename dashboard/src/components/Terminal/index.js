@@ -4,10 +4,10 @@ import { Terminal } from 'xterm';
 // import * as fit from 'xterm/lib/addons/fit/fit';
 import styles from './index.less';
 
-export class Termianal extends Component {
+class Termianal extends Component {
   static defaultProps = {
     streamListened: {},
-  }
+  };
   constructor(props) {
     super(props);
 
@@ -25,10 +25,11 @@ export class Termianal extends Component {
     this.terminal.open(termContainer);
   }
   componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
-      const { streamListened } = this.props;
-      this.terminal.write(streamListened.data && streamListened.data.trim() + '\n');
+    if (prevProps.data !== this.props.data) {
       // TODO: 替换回车为换行符
+      // console.warn(prevProps);
+      const { data } = this.props;
+      this.terminal.write(data);
     }
   }
 

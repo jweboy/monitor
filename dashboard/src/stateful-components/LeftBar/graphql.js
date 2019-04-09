@@ -5,7 +5,7 @@ export const STREAM_MUTATION = gql`
   mutation listenStream($script: String, $path: String) {
     listenStream(path: $path, script: $script) {
       data
-      timestamp
+      killed
     }
   }
 `;

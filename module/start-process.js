@@ -8,7 +8,7 @@ module.exports = async function startProcess(type, pubsub, opts = {}) {
   if (type === 'kill') {
     scriptProcess.kill();
     console.log('pid', scriptProcess.pid, scriptProcess.killed);
-    return pubsub.publish(LISTEN_STREAM, {
+    return pubsub.publish('STREAM_KILLED', {
       streamListened: {
         data: '',
         killed: scriptProcess.killed,

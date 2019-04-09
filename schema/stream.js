@@ -23,7 +23,7 @@ const streamTypeDefs = `
 const streamResolvers = {
   Subscription: {
     streamListened: {
-      subscribe: () => pubsub.asyncIterator([LISTEN_STREAM]),
+      subscribe: () => pubsub.asyncIterator([LISTEN_STREAM, 'STREAM_KILLED']),
     },
   },
   Mutation: {

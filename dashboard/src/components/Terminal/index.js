@@ -25,11 +25,16 @@ class Termianal extends Component {
     this.terminal.open(termContainer);
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.data !== this.props.data) {
-      // TODO: 替换回车为换行符
-      // console.warn(prevProps);
-      const { data } = this.props;
-      this.terminal.write(data);
+    const { data, killed } = this.props;
+    if (prevProps.data !== data) {
+      // TODO: 光标位置初始化
+      // this.terminal.addMarker(0);
+
+      if (killed) {
+        this.terminal.clear();
+      } else {
+        this.terminal.write(data);
+      }
     }
   }
 

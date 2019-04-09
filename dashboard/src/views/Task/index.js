@@ -73,7 +73,7 @@ class TaskPage extends Component {
           <StopButton killed={streamListened.killed} />
           <Badge {...TaskPage.getStatus(streamListened.killed)} />
         </div>
-        <Terminal data={streamListened.data} />
+        <Terminal {...streamListened} />
       </div>
     );
   }

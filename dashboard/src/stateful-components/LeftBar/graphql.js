@@ -11,3 +11,9 @@ export const STREAM_MUTATION = gql`
 `;
 
 export const wihtMutation = graphql(STREAM_MUTATION);
+
+export const mapDispatchToProps = ({ task: { currentProcessStatus } }) => {
+  return {
+    currentProcessStatus,
+  };
+};

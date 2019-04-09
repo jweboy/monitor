@@ -42,12 +42,13 @@ export const withQuery = graphql(SCRIPT_QUERY, {
 
 export const withMutation = graphql(STREAM_MUTATION);
 
-export const withSubscribe = graphql(STREAM_SUBSCRIPTION, {
+export const withSubscription = graphql(STREAM_SUBSCRIPTION, {
   props: ({ data }) => data,
 });
 
-export const mapDispatchToProps = ({ task: { scriptList }, common: { leftbar } }) => {
+export const mapDispatchToProps = ({ task: { scriptList, currentProcessStatus }, common: { leftbar } }) => {
   return {
+    currentProcessStatus,
     scriptList,
     leftbar,
   };

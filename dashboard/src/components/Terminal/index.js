@@ -17,25 +17,24 @@ class Termianal extends Component {
     // Terminal.applyAddon(fit);
     const termContainer = document.getElementById('terminal');
     this.terminal = new Terminal({
-      RendererType: 'dom',
-      cursorBlink: true,
-      scrollBack: 3,
-      tabStopWidth: 3,
+      cursorBlink: true, // 光标是否闪烁
+      cursorStyle: null, // 光标样式  null | 'block' | 'underline' | 'bar'
     });
     this.terminal.open(termContainer);
   }
   componentDidUpdate(prevProps) {
     const { data, killed } = this.props;
     if (prevProps.data !== data) {
-      // TODO: 光标位置初始化
-      // this.terminal.addMarker(0);
-
       if (killed) {
         this.terminal.clear();
+        this.terminal.addMarker(0);
       } else {
-        this.terminal.write(data);
+        this.terminal.writeln(data);
       }
     }
+  }
+  componentWillUnmount() {
+    this.terminal.dispose();
   }
 
   render() {

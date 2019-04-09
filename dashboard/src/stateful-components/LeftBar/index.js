@@ -2,31 +2,37 @@ import React, { Component } from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-import { wihtMutation } from './graphql';
+import { wihtMutation, mapDispatchToProps } from './graphql';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 const MenuItem = Menu.Item;
 
 @wihtMutation
-@connect((state) => ({
-  data: state.common.leftbar,
-}))
+@connect(
+  (state) => ({
+    data: state.common.leftbar,
+    isKilled: state.task.isKilled,
+  }),
+  mapDispatchToProps
+)
 class LeftBar extends Component {
   handleClick = (item) => () => {
-    const { mutate, location } = this.props;
-
+    const { mutate, location, currentProcessStatus, isKilled } = this.props;
+    console.warn(isKilled);
     mutate({
       variables: {
         path: location.state.currentPath,
         script: item.value,
       },
+    }).then((data) => {
+      console.warn(data);
+      // currentProcessStatus(false);
     });
   };
   render() {
     const { data } = this.props;
-    console.log(this.props);
+    // console.log(this.props);
     // console.warn('render menu', data);
     return (
       <Sider>

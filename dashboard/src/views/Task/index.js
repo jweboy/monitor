@@ -4,17 +4,15 @@ import { connect } from 'react-redux';
 import { Badge } from 'antd';
 import styles from './index.less';
 import { Terminal } from '../../components';
-import { withQuery, mapDispatchToProps, withSubscribe } from './query';
+import { withQuery, mapDispatchToProps, withSubscription } from './query';
 import StopButton from './StopButton';
-
-// const Termal = withSubscribe(Terminal);
 
 @connect(
   () => ({}),
   mapDispatchToProps
 )
 @withQuery
-@withSubscribe
+@withSubscription
 class TaskPage extends Component {
   static defaultProps = {
     streamListened: {
@@ -62,15 +60,14 @@ class TaskPage extends Component {
     //   },
     // });
   }
-
   render() {
     console.warn(this.props);
-    const { streamListened } = this.props;
+    const { streamListened, currentProcessStatus } = this.props;
     return (
       <div>
         <div className={styles.header}>
           {/* subscribeToMore  https://www.apollographql.com/docs/react/advanced/subscriptions */}
-          <StopButton killed={streamListened.killed} />
+          <StopButton {...streamListened} dispatch={currentProcessStatus} />
           <Badge {...TaskPage.getStatus(streamListened.killed)} />
         </div>
         <Terminal {...streamListened} />

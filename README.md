@@ -15,5 +15,8 @@
 - [Nextjs中文文档](https://segmentfault.com/a/1190000016359472)
 - [rematch文档](https://rematch.gitbook.io/handbook/)
 - [apollo-graphql-react中文文档](https://apollographqlcn.github.io/react-docs-cn/redux.html)
+- [GraphQL Server Tutorial with Apollo Server and Express](https://www.robinwieruch.de/graphql-apollo-server-tutorial/)
 
-https://www.robinwieruch.de/graphql-apollo-server-tutorial/
+# Inprogress
+
+- 目前停止进程仅支持 `Node` 进程，不支持 `nodemon` 启动的进程。

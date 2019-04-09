@@ -4,10 +4,10 @@ import { Terminal } from 'xterm';
 // import * as fit from 'xterm/lib/addons/fit/fit';
 import styles from './index.less';
 
-export class Termianal extends Component {
+class Termianal extends Component {
   static defaultProps = {
     streamListened: {},
-  }
+  };
   constructor(props) {
     super(props);
 
@@ -17,19 +17,24 @@ export class Termianal extends Component {
     // Terminal.applyAddon(fit);
     const termContainer = document.getElementById('terminal');
     this.terminal = new Terminal({
-      RendererType: 'dom',
-      cursorBlink: true,
-      scrollBack: 3,
-      tabStopWidth: 3,
+      cursorBlink: true, // 光标是否闪烁
+      cursorStyle: null, // 光标样式  null | 'block' | 'underline' | 'bar'
     });
     this.terminal.open(termContainer);
   }
   componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
-      const { streamListened } = this.props;
-      this.terminal.write(streamListened.data && streamListened.data.trim() + '\n');
-      // TODO: 替换回车为换行符
+    const { data, killed } = this.props;
+    if (prevProps.data !== data) {
+      if (killed) {
+        this.terminal.clear();
+        this.terminal.addMarker(0);
+      } else {
+        this.terminal.writeln(data);
+      }
     }
+  }
+  componentWillUnmount() {
+    this.terminal.dispose();
   }
 
   render() {

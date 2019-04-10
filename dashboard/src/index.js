@@ -8,8 +8,26 @@ import { getMainDefinition } from 'apollo-utilities';
 import { WebSocketLink } from 'apollo-link-ws';
 import { ApolloLink, split } from 'apollo-link';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { onError } from 'apollo-link-error';
+import { notification } from 'antd';
 import store from './store';
 import App from './views/Router';
+
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    graphQLErrors.map(({ message, path }) => {
+      notification.error({
+        message: `[GraphQL error]: Message: ${message}, Path: ${path}`,
+      });
+    });
+  }
+
+  if (networkError) {
+    notification.error({
+      message: `[Network error]: ${networkError}`,
+    });
+  }
+});
 
 const httpLink = new HttpLink({
   uri: 'http://localhost:4000/graphql',
@@ -31,7 +49,7 @@ const terminatingLink = split(
   httpLink
 );
 
-const link = ApolloLink.from([terminatingLink]);
+const link = ApolloLink.from([errorLink, terminatingLink]);
 
 const cache = new InMemoryCache();
 

@@ -9,8 +9,10 @@ export default {
       return state;
     },
     currentProcessStatus(state, payload) {
-      state.isKilled = payload;
-      return state;
+      return {
+        ...state,
+        isKilled: payload,
+      };
     },
   },
   effects: {

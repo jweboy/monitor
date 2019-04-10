@@ -4,17 +4,10 @@ import { withMutation } from './query';
 
 @withMutation
 class StopButton extends Component {
-  // componentDidUpdate(prevProps) {
-  //   const { dispatch, data } = this.props;
-  //   if (prevProps.data !== data && data !== '') {
-  //     dispatch(false);
-  //   }
-  // }
-
   handleClick = () => {
     const { mutate, killed, dispatch } = this.props;
 
-    if (!killed) {
+    if (killed) {
       return message.error('当前进程暂未启动');
     }
 

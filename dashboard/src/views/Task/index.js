@@ -6,8 +6,6 @@ import { Terminal } from '../../components';
 import { withQuery, mapDispatchToProps, withSubscription } from './query';
 import StopButton from './StopButton';
 
-const Termal = withSubscribe(Terminal);
-
 @connect(
   () => ({}),
   mapDispatchToProps
@@ -52,27 +50,12 @@ class TaskPage extends Component {
     }
     return null;
   }
-  componentDidMount() {
-    // const { subscribeToMore } = this.props;
-    // subscribeToMore({
-    //   document: STREAM_SUBSCRIPTION,
-    //   updateQuery: (prev, { subscriptionData }) => {
-    //     console.warn(prev, subscriptionData);
-    //   },
-    // });
-  }
-
-  handleClick = () => {
-    console.warn(this.props);
-  };
-
   render() {
-    console.warn(this.props);
+    console.warn('render task page => ', this.props);
     const { streamListened, currentProcessStatus } = this.props;
     return (
       <div>
         <div className={styles.header}>
-          {/* subscribeToMore  https://www.apollographql.com/docs/react/advanced/subscriptions */}
           <StopButton {...streamListened} dispatch={currentProcessStatus} />
           <Badge {...TaskPage.getStatus(streamListened.killed)} />
         </div>

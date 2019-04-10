@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
 export const DIR_QUERY = gql`
-  query Directories($type: String!, $path: String!, $fileName: String!) {
+  query Directories($type: String!, $path: String!, $fileName: String) {
     directories(type: $type, path: $path, fileName: $fileName) {
       currentPath
       childDirs {

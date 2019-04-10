@@ -14,7 +14,7 @@ export const DIR_QUERY = gql`
 `;
 
 export const DIR_MUTATION = gql`
-  mutation Directories($type: String!, $path: String!, $fileName: String!) {
+  mutation Directories($type: String!, $path: String, $fileName: String) {
     directories(type: $type, path: $path, fileName: $fileName) {
       currentPath
       childDirs {

@@ -1,73 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ApolloClient } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { Provider } from 'react-redux';
-import { HttpLink } from 'apollo-link-http';
-import { getMainDefinition } from 'apollo-utilities';
-import { WebSocketLink } from 'apollo-link-ws';
-import { ApolloLink, split } from 'apollo-link';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { onError } from 'apollo-link-error';
-import { notification } from 'antd';
 import store from './store';
 import App from './views/Router';
+import { createApolloClient } from './util/apollo';
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors) {
-    graphQLErrors.map(({ message, path }) => {
-      notification.error({
-        message: `[GraphQL error]: Message: ${message}, Path: ${path}`,
-      });
-    });
-  }
-
-  if (networkError) {
-    notification.error({
-      message: `[Network error]: ${networkError}`,
-    });
-  }
-});
-
-const httpLink = new HttpLink({
-  uri: 'http://localhost:4000/graphql',
-});
-
-const wsLink = new WebSocketLink({
-  uri: 'ws://localhost:4000/graphql',
-  options: {
-    reconnect: true,
-  },
-});
-
-const terminatingLink = split(
-  ({ query }) => {
-    const { kind, operation } = getMainDefinition(query);
-    return kind === 'OperationDefinition' && operation === 'subscription';
-  },
-  wsLink,
-  httpLink
-);
-
-const link = ApolloLink.from([errorLink, terminatingLink]);
-
-const cache = new InMemoryCache();
-
-// graphql client
-const client = new ApolloClient({
-  link,
-  cache,
-});
-
-// const initialState = {};
-// const store = createStore(
-//   reducers,
-//   initialState,
-//   compose(typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined' ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f)
-// );
+const { apolloClient } = createApolloClient();
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
+  <ApolloProvider client={apolloClient}>
     <Provider store={store}>
       <App />
     </Provider>

@@ -27,7 +27,7 @@ export const DIR_MUTATION = gql`
 
 export const withQuery = graphql(DIR_QUERY, {
   props: ({ data }) => data,
-  options: { variables: { type: 'forward', path: '/Users/jianglei/LearnNode/cache' } },
+  options: { variables: { type: 'forward', path: '/Users/jianglei/ReactProjects/react-webpack-toolkit' } },
 });
 
 export const withMutation = graphql(DIR_MUTATION);

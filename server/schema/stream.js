@@ -1,5 +1,5 @@
-const { PubSub, withFilter } = require('apollo-server');
-const startProcess = require('../module/start-process');
+const { PubSub } = require('apollo-server');
+const task = require('../module/task');
 
 const pubsub = new PubSub();
 const LISTEN_STREAM = 'LISTEN_STREAM';
@@ -27,8 +27,8 @@ const streamResolvers = {
     },
   },
   Mutation: {
-    listenStream: (_, args) => startProcess('listen', pubsub, args),
-    killStream: () => startProcess('kill', pubsub),
+    listenStream: (_, args) => task.run(pubsub, args),
+    killStream: () => task.stop('kill', pubsub),
   },
 };
 

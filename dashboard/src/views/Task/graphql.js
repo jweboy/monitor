@@ -20,6 +20,15 @@ export const STREAM_SUBSCRIPTION = gql`
   }
 `;
 
+export const TASK_KILL_SUBSCRIPTION = gql`
+  subscription taskKilled {
+    taskKilled {
+      data
+      killed
+    }
+  }
+`;
+
 export const STREAM_MUTATION = gql`
   mutation killStream {
     killStream {
@@ -43,6 +52,10 @@ export const withQuery = graphql(SCRIPT_QUERY, {
 export const withMutation = graphql(STREAM_MUTATION);
 
 export const withSubscription = graphql(STREAM_SUBSCRIPTION, {
+  props: ({ data }) => data,
+});
+
+export const subscribeTerminateTask = graphql(TASK_KILL_SUBSCRIPTION, {
   props: ({ data }) => data,
 });
 

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Badge } from 'antd';
 import styles from './index.less';
 import { Terminal } from '../../components';
-import { withQuery, mapDispatchToProps, withSubscription } from './query';
+import { withQuery, mapDispatchToProps, withSubscription, subscribeTerminateTask } from './graphql';
 import StopButton from './StopButton';
 
 @connect(
@@ -12,6 +12,7 @@ import StopButton from './StopButton';
 )
 @withQuery
 @withSubscription
+@subscribeTerminateTask
 class TaskPage extends Component {
   static defaultProps = {
     streamListened: {

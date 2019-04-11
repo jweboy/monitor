@@ -1,8 +1,10 @@
-// const { exec, spawn } = require('child_process');
+const { exec, spawn } = require('child_process');
 const execa = require('execa');
+const { TASK_LOG_ADDED, TASK_LOG_CLEAR } = require('../contants/graphql');
 const { log } = require('../utils/logger');
+const { terminate } = require('../utils/terminate');
+// const { notify } = require('../utils/notification');
 
-const LISTEN_STREAM = 'LISTEN_STREAM';
 let child = null;
 
 function logPipe(action) {
@@ -38,30 +40,19 @@ function logPipe(action) {
   };
 }
 
-async function startProcess(pubsub, opts = {}) {
-  // console.log('process', child);
-  // if (type === 'kill') {
-  //   child.kill();
-  //   console.log('pid', child.pid, child.killed);
-  //   return pubsub.publish('STREAM_KILLED', {
-  //     streamListened: {
-  //       data: '',
-  //       killed: child.killed,
-  //     },
-  //   });
-  // }
-
+function startProcess(opts = {}, pubsub) {
   const { script, path } = opts;
-  console.log('param', script, path);
+  log('script => ', script);
+  log('path => ', path);
 
   child = execa.shell(script, {
     cwd: path,
-    stdio: ['pipe', 'pipe', 'pipe'],
+    stdio: ['inherit', 'pipe', 'pipe'],
   });
 
   const outPipe = logPipe(chunk => {
-    log(chunk);
-    pubsub.publish(LISTEN_STREAM, {
+    // log(chunk);
+    pubsub.publish(TASK_LOG_ADDED, {
       streamListened: {
         data: chunk,
         killed: child.killed,
@@ -70,13 +61,13 @@ async function startProcess(pubsub, opts = {}) {
   });
 
   child.stdout.on('data', (buffer) => {
-    console.log('Stdout buffer: ', buffer.toString());
+    // console.log('Stdout buffer: ', buffer.toString());
     outPipe.add(buffer.toString());
   });
 
   const errPipe = logPipe(chunk => {
-    log(chunk);
-    pubsub.publish(LISTEN_STREAM, {
+    // log(chunk);
+    pubsub.publish(TASK_LOG_ADDED, {
       streamListened: {
         data: chunk,
         killed: child.killed,
@@ -85,25 +76,58 @@ async function startProcess(pubsub, opts = {}) {
   })
 
   child.stderr.on('data', (buffer) => {
-    console.log('Stderr error: ', buffer.toString());
+    // console.log('Stderr error: ', buffer.toString());
     errPipe.add(buffer.toString());
   });
 
   // Close
   child.stdout.on('close', (code, signal) => {
-    console.log('Close: code is %s, signal is %s.', code, signal);
+    log(`Close: code is ${code}, signal is ${signal}.`);
+    log('isKilled', child.killed);
+    log('connected', child.connected);
+    // log(child.killed);
+    // notify({
+    //   title: 'Task error',
+    //   message: 'Task is closed',
+    // });
     // process.exit(1);
   });
+
+  child.on('error', err => {
+    log('err', error);
+  })
 
   // Exit
   child.stdout.on('exit', (code, signal) => {
     console.log('Exit: code is %s, signal is %s.', code, signal);
   });
+}
 
-  // console.log('data => ', data);
-  // child.kill('SIGTERM');
+async function stopProcess(pubsub) {
+  try{
+    const { success, error } = await terminate(child, '/Users/jianglei/ReactProjects/react-webpack-toolkit');
+
+    if (success) {
+      log('Terminate process successful.');
+      return pubsub.publish(TASK_LOG_CLEAR, {
+        streamListened: {
+          data: '',
+          killed: child.killed,
+        },
+      });
+    } else if (error) {
+      log('Terminate process failed.');
+      log(error);
+    } else {
+      log('Unknow error.');
+    }
+  } catch(err) {
+    log(`Can't terminate process ${child.pid}`);
+    log(err);
+  }
 }
 
 module.exports = {
   run: startProcess,
+  stop: stopProcess,
 };

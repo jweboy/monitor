@@ -1,8 +1,8 @@
 const { PubSub } = require('apollo-server');
 const task = require('../module/task');
+const { TASK_LOG_ADDED, TASK_LOG_CLEAR } = require('../contants/graphql');
 
 const pubsub = new PubSub();
-const LISTEN_STREAM = 'LISTEN_STREAM';
 
 const streamTypeDefs = `
     type Stream {
@@ -12,6 +12,7 @@ const streamTypeDefs = `
 
     extend type Subscription {
         streamListened: Stream
+        taskKilled: Stream
     }
 
     extend type Mutation {
@@ -23,12 +24,21 @@ const streamTypeDefs = `
 const streamResolvers = {
   Subscription: {
     streamListened: {
-      subscribe: () => pubsub.asyncIterator([LISTEN_STREAM, 'STREAM_KILLED']),
+      subscribe: () => {
+        console.log('start');
+        return pubsub.asyncIterator([TASK_LOG_ADDED, TASK_LOG_CLEAR]);
+      },
+    },
+    taskKilled: {
+      subscribe: () => {
+        console.log('clear');
+        return pubsub.asyncIterator([TASK_LOG_CLEAR]);
+      },
     },
   },
   Mutation: {
-    listenStream: (_, args) => task.run(pubsub, args),
-    killStream: () => task.stop('kill', pubsub),
+    listenStream: (_, args) => task.run(args, pubsub),
+    killStream: () => task.stop(pubsub),
   },
 };
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, message } from 'antd';
-import { withMutation } from './query';
+import { withMutation } from './graphql';
 
 @withMutation
 class StopButton extends Component {
